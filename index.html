@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>职投台 - 智能简历投递助手</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">职</span><div><strong>职投台</strong><small>智能求职工作台</small></div></div>
+      <nav>
+        <button class="nav-item active" data-view="dashboard">概览</button>
+        <button class="nav-item" data-view="resume">简历画像</button>
+        <button class="nav-item" data-view="sources">岗位情报 <span id="feedBadge">0</span></button>
+        <button class="nav-item" data-view="jobs">岗位匹配</button>
+        <button class="nav-item" data-view="queue">投递队列 <span id="queueBadge">0</span></button>
+        <button class="nav-item" data-view="automation">自动化中心</button>
+        <button class="nav-item" data-view="records">投递记录</button>
+      </nav>
+      <div class="sidebar-foot"><span class="status-dot"></span>数据仅保存在本机浏览器</div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow">JOB APPLICATION COPILOT</p><h1 id="pageTitle">求职概览</h1></div>
+        <div class="top-actions">
+          <button class="ghost" id="backupBtn">备份数据</button>
+          <button class="primary" data-jump="resume">导入简历</button>
+        </div>
+      </header>
+
+      <section class="view active" id="dashboardView">
+        <div class="hero">
+          <div>
+            <span class="pill">本地运行 · 规则驱动 · 提交前确认</span>
+            <h2>让每一次投递<br><em>更准确、更有记录。</em></h2>
+            <p>从简历画像、岗位评分到投递队列和沟通话术，形成可复用的求职流程，并为后续合规自动化预留接口。</p>
+            <div class="hero-actions"><button class="primary light" data-jump="resume">完善求职画像</button><button class="text-btn hero-link" data-jump="automation">配置自动化 →</button></div>
+          </div>
+          <div class="score-ring">
+            <svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="50"></circle><circle class="ring-progress" id="profileRing" cx="60" cy="60" r="50"></circle></svg>
+            <div><strong id="profileScore">0</strong><span>%</span><small>自动化就绪度</small></div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article><span>高匹配岗位</span><strong id="matchedCount">0</strong><small>达到自动筛选阈值</small></article>
+          <article><span>待确认投递</span><strong id="pendingCount">0</strong><small>等待人工复核</small></article>
+          <article><span>累计已投递</span><strong id="appliedCount">0</strong><small>本地投递记录</small></article>
+          <article><span>今日岗位更新</span><strong id="dailyFeedCount">0</strong><small id="dailyFeedTime">等待更新</small></article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-head"><div><span class="eyebrow">WORKFLOW</span><h3>投递流程</h3></div></div>
+            <div class="steps">
+              <button data-jump="resume"><b>01</b><span><strong>导入简历与求职偏好</strong><small id="resumeStepText">等待导入简历</small></span><i>→</i></button>
+              <button data-jump="jobs"><b>02</b><span><strong>计算岗位匹配度</strong><small>技能、职位、城市、薪资综合评分</small></span><i>→</i></button>
+              <button data-jump="automation"><b>03</b><span><strong>执行投递规则</strong><small>先模拟，再生成待确认队列</small></span><i>→</i></button>
+              <button data-jump="queue"><b>04</b><span><strong>逐条核对并投递</strong><small>自动复制话术，打开对应平台页面</small></span><i>→</i></button>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><span class="eyebrow">PLATFORMS</span><h3>平台入口</h3></div></div>
+            <div class="platform-list" id="dashboardPlatforms"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="sourcesView">
+        <div class="source-hero">
+          <div>
+            <span class="pill dark-pill">DAILY JOB INTELLIGENCE</span>
+            <h2>国央企、编制与主流平台<br><em>统一搜寻。</em></h2>
+            <p>聚合公开入口与每日岗位情报。官方公告只做索引和匹配，报名条件与截止日期请以原始公告为准。</p>
+          </div>
+          <div class="feed-status">
+            <span>最近更新</span><strong id="feedUpdatedAt">尚未更新</strong><small id="feedSourceCount">0 个来源</small>
+            <button class="primary light" id="mergeDailyFeed">合并今日岗位</button>
+          </div>
+        </div>
+
+        <article class="panel source-toolbar">
+          <div class="source-search">
+            <label>搜索关键词<input id="sourceKeyword" placeholder="例如：机械、机器人、事业编、央企"></label>
+            <label>目标城市<input id="sourceCity" placeholder="留空则使用求职画像城市"></label>
+            <label>来源类别<select id="sourceCategory"><option value="all">全部来源</option><option value="general">综合招聘</option><option value="campus">校招与应届生</option><option value="state">国央企</option><option value="institution">事业单位</option><option value="civil">公务员与编制</option></select></label>
+          </div>
+          <button class="primary" id="openSourceSearch">打开选中来源</button>
+        </article>
+
+        <div class="source-layout">
+          <div>
+            <div class="list-heading"><span id="sourceResultCount">0 个岗位来源</span><button class="text-btn" id="selectRecommendedSources">选择推荐来源</button></div>
+            <div class="source-grid" id="sourceGrid"></div>
+          </div>
+          <aside class="panel feed-panel">
+            <span class="eyebrow">TODAY FEED</span><h3>今日更新预览</h3>
+            <div id="dailyFeedPreview"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="resumeView">
+        <div class="section-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <div><span class="eyebrow">RESUME</span><h3>简历内容</h3></div>
+              <label class="file-label">读取文本文件<input id="resumeFile" type="file" accept=".txt,.md,.json"></label>
+            </div>
+            <p class="hint">直接粘贴简历全文。Word/PDF 可复制文字到这里，内容不会上传到服务器。</p>
+            <textarea id="resumeText" placeholder="粘贴教育经历、工作经历、项目经历、技能及成果……"></textarea>
+            <div class="form-actions"><button class="ghost" id="clearResume">清空</button><button class="primary" id="analyzeResume">分析简历</button></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><span class="eyebrow">TARGET</span><h3>求职目标</h3></div></div>
+            <div class="form-grid">
+              <label>姓名或称呼<input id="candidateName" placeholder="用于生成沟通话术"></label>
+              <label>目标职位<input id="targetRole" placeholder="机械工程师、控制算法工程师"></label>
+              <label>目标城市<input id="targetCity" placeholder="上海、苏州、杭州"></label>
+              <label>最低月薪（K）<input id="minSalary" type="number" min="0" placeholder="15"></label>
+              <label>经验偏好<select id="experience"><option value="">不限</option><option>应届生</option><option>1-3年</option><option>3-5年</option><option>5年以上</option></select></label>
+              <label>学历<select id="education"><option value="">不限</option><option>大专</option><option>本科</option><option>硕士</option><option>博士</option></select></label>
+              <label class="wide">核心关键词<input id="keywords" placeholder="SolidWorks, MATLAB, 机器人, 控制算法"></label>
+              <label class="wide">排除关键词<input id="excludeKeywords" placeholder="销售, 外包, 单休"></label>
+            </div>
+            <button class="primary full" id="saveProfile">保存求职画像</button>
+          </article>
+        </div>
+        <article class="panel analysis-panel">
+          <div class="panel-head"><div><span class="eyebrow">ANALYSIS</span><h3>简历分析结果</h3></div></div>
+          <div id="analysisEmpty" class="empty">粘贴简历后点击“分析简历”。</div>
+          <div id="analysisResult" class="analysis-result hidden"></div>
+        </article>
+      </section>
+
+      <section class="view" id="jobsView">
+        <article class="panel filter-bar">
+          <div>
+            <label>搜索岗位<input id="jobSearch" placeholder="职位、公司或技能"></label>
+            <label>平台<select id="platformFilter"><option value="all">全部平台</option></select></label>
+            <label>最低匹配度<input id="matchFilter" type="range" min="0" max="100" value="50"><span id="matchValue">50%</span></label>
+          </div>
+          <div class="inline-actions"><button class="ghost" id="importJobsBtn">导入岗位</button><button class="primary" id="addJobBtn">录入岗位</button></div>
+        </article>
+        <input class="hidden" id="jobsFile" type="file" accept=".json,.csv,.txt">
+        <div class="jobs-layout">
+          <div>
+            <div class="list-heading"><span id="jobResultCount">0 个岗位</span><button class="text-btn" id="queueAll">加入全部高匹配</button></div>
+            <div id="jobList" class="job-list"></div>
+          </div>
+          <aside class="panel insight">
+            <span class="eyebrow">MATCH ENGINE</span><h3>评分规则</h3>
+            <div class="legend"><i class="green"></i><span><strong>技能关键词 40%</strong><small>简历与岗位描述重合</small></span></div>
+            <div class="legend"><i class="blue"></i><span><strong>职位方向 25%</strong><small>目标职位与岗位名称接近</small></span></div>
+            <div class="legend"><i class="orange"></i><span><strong>城市薪资 20%</strong><small>符合偏好与最低薪资</small></span></div>
+            <p>剩余分数来自资料完整度与经验要求。分数用于筛选，不代表录用概率。</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="queueView">
+        <article class="panel">
+          <div class="panel-head"><div><span class="eyebrow">REVIEW QUEUE</span><h3>待确认投递</h3></div><button class="ghost" id="clearQueue">清空队列</button></div>
+          <div class="notice">点击“准备投递”会复制定制话术并打开平台搜索页。请核对职位、公司和发送内容后再提交。</div>
+          <div id="queueList" class="queue-list"></div>
+        </article>
+      </section>
+
+      <section class="view" id="automationView">
+        <div class="automation-grid">
+          <article class="panel">
+            <div class="panel-head"><div><span class="eyebrow">RULES</span><h3>自动筛选规则</h3></div><span class="mode-badge" id="automationModeBadge">模拟模式</span></div>
+            <div class="form-grid">
+              <label>自动入队最低匹配度<input id="autoThreshold" type="number" min="50" max="100"></label>
+              <label>每日投递上限<input id="dailyLimit" type="number" min="1" max="50"></label>
+              <label>同一公司最多投递<input id="companyLimit" type="number" min="1" max="10"></label>
+              <label>岗位发布时间限制<select id="freshnessDays"><option value="0">不限</option><option value="1">最近 1 天</option><option value="3">最近 3 天</option><option value="7">最近 7 天</option><option value="14">最近 14 天</option></select></label>
+              <label class="wide">公司黑名单<input id="companyBlacklist" placeholder="逗号分隔"></label>
+              <label class="wide checkbox-label"><input id="skipApplied" type="checkbox"> 跳过已投递过的同公司同职位</label>
+            </div>
+            <div class="form-actions"><button class="ghost" id="simulateBtn">模拟运行</button><button class="primary" id="runRulesBtn">生成投递队列</button></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head"><div><span class="eyebrow">MESSAGE</span><h3>沟通话术模板</h3></div></div>
+            <p class="hint">支持变量：{姓名}、{职位}、{公司}、{技能}、{城市}</p>
+            <textarea id="messageTemplate" class="template-box"></textarea>
+            <button class="primary full" id="saveAutomation">保存自动化设置</button>
+          </article>
+        </div>
+
+        <article class="panel analysis-panel">
+          <div class="panel-head"><div><span class="eyebrow">DRY RUN</span><h3>模拟运行结果</h3></div><button class="ghost" id="exportPlanBtn">导出执行计划</button></div>
+          <div id="simulationResult" class="empty">点击“模拟运行”，查看哪些岗位会被加入队列以及被跳过的原因。</div>
+        </article>
+
+        <article class="panel analysis-panel">
+          <div class="panel-head"><div><span class="eyebrow">ADAPTER STATUS</span><h3>平台适配器</h3></div></div>
+          <div class="adapter-grid" id="adapterGrid"></div>
+          <div class="notice adapter-note">当前为人工确认辅助模式。后续只有在平台提供允许的开放接口，或在你已登录且明确确认每次提交的浏览器辅助模式下，才启用真正提交。</div>
+        </article>
+      </section>
+
+      <section class="view" id="recordsView">
+        <article class="panel">
+          <div class="panel-head"><div><span class="eyebrow">HISTORY</span><h3>投递记录</h3></div><div class="inline-actions"><button class="ghost" id="exportBtn">导出 CSV</button><button class="ghost danger" id="clearRecords">清除记录</button></div></div>
+          <div id="recordList" class="record-list"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="jobDialog">
+    <form method="dialog" id="jobForm">
+      <div class="dialog-head"><h3>录入岗位</h3><button value="cancel">×</button></div>
+      <div class="form-grid">
+        <label>职位名称<input name="title" required></label><label>公司名称<input name="company" required></label>
+        <label>城市<input name="city" required></label><label>薪资<input name="salary" placeholder="15-25K"></label>
+        <label>平台<select name="platform" id="jobPlatformSelect"></select></label>
+        <label>经验要求<input name="experience" placeholder="1-3年"></label>
+        <label>发布日期<input name="publishedAt" type="date"></label><label>岗位链接<input name="url" type="url" placeholder="https://"></label>
+        <label class="wide">岗位关键词<input name="tags" placeholder="SolidWorks, 机器人, 结构设计"></label>
+        <label class="wide">岗位描述<textarea name="description" rows="5"></textarea></label>
+      </div>
+      <div class="form-actions"><button value="cancel" class="ghost">取消</button><button value="default" class="primary" id="saveJobBtn">保存岗位</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDialog">
+    <form method="dialog">
+      <div class="dialog-head"><h3>投递前核对</h3><button value="cancel">×</button></div>
+      <div id="confirmJobInfo"></div>
+      <label class="dialog-label">待发送话术<textarea id="confirmMessage" rows="7"></textarea></label>
+      <div class="form-actions"><button value="cancel" class="ghost">暂不投递</button><button value="open" class="primary" id="confirmOpenBtn">复制话术并打开平台</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+  <script src="platform-adapters.js"></script>
+  <script src="job-sources.js"></script>
+  <script src="daily-jobs.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
