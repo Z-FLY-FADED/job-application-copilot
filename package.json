@@ -1,0 +1,20 @@
+{
+  "name": "job-application-copilot",
+  "version": "1.8.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first job application workspace and browser autofill extension",
+  "repository": {"type": "git", "url": "https://github.com/Z-FLY-FADED/job-application-copilot.git"},
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node scripts/test.mjs",
+    "test:baseline": "node scripts/test.mjs --baseline",
+    "test:web": "node tests/verify-web.cjs",
+    "test:equivalence": "node tests/verify-equivalence.cjs",
+    "check:privacy": "node scripts/check-privacy.mjs",
+    "verify": "npm test && npm run check:privacy",
+    "package": "npm run build && node scripts/package.mjs"
+  },
+  "devDependencies": {"esbuild": "0.28.2", "playwright": "1.64.1"}
+}

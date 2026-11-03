@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>Moka 控件回归测试</title><style>label{display:inline-block;border:1px solid #ccc;margin:5px;padding:5px}input{min-width:60px}.sd-Menu-content-item-fixture{cursor:pointer;padding:4px}.sd-Dropdown-container-fixture{display:inline-block}button[aria-label=Clear]{width:16px;height:16px}</style><div id="root"></div><button id="submit">预览并提交</button><script>
+window.submitCount=0;document.querySelector('#submit').onclick=()=>window.submitCount++;
+function row(label,kind='text',options=[]){
+ const field=document.createElement('div');field.className='apply-field-fixture';const title=document.createElement('div');title.className='title-fixture';title.textContent=label;field.append(title);
+ function select(opts){const dropdown=document.createElement('div');dropdown.className='sd-Dropdown-container-fixture';const wrap=document.createElement('label');wrap.className='sd-Select-container-fixture';const selected=document.createElement('span');selected.className='selection';const input=document.createElement('input');input.type='text';const clear=document.createElement('button');clear.setAttribute('aria-label','Clear');clear.onclick=e=>{e.preventDefault();selected.textContent='';input.value='';};wrap.append(selected,input,clear);dropdown.append(wrap);field.append(dropdown);
+  function render(){dropdown.querySelector('.menu')?.remove();const menu=document.createElement('div');menu.className='menu';for(const val of opts.filter(v=>v.includes(input.value))){const item=document.createElement('div');item.className='sd-Menu-content-item-fixture';item.textContent=val;item.onclick=()=>{selected.textContent=val;input.value='';menu.remove();if(kind==='date'&&[...field.querySelectorAll('input')].indexOf(input)%2===0){[...field.querySelectorAll('label')].forEach((l,i)=>{if(i%2===1)l.querySelector('.selection').textContent='1';});}};menu.append(item);}dropdown.append(menu);}
+  input.onclick=render;input.oninput=render;title.onclick=()=>field.querySelectorAll('.menu').forEach(m=>m.remove());return input;
+ }
+ if(kind==='select')select(options);
+ else if(kind==='date'){field.classList.add('date_info-fixture');for(let i=0;i<options;i++)select(i%2===0?Array.from({length:12},(_,j)=>String(2020+j)):Array.from({length:12},(_,j)=>String(j+1)));}
+ else if(kind==='checkbox'){const l=document.createElement('label');const i=document.createElement('input');i.type='checkbox';l.append(i,'至今');field.append(l);}
+ else{const input=document.createElement(kind==='textarea'?'textarea':'input');field.append(input);}
+ return field;
+}
+function block(name,key){const block=document.createElement('section');block.className='apply-block-fixture';block.dataset.group=key;const h=document.createElement('div');h.className='blockTitle-fixture';h.append(name);const add=document.createElement('button');add.textContent='添加';h.append(add);block.append(h);document.getElementById('root').append(block);
+ function record(){const r=document.createElement('div');r.className='apply-fields-fixture multi-fixture';if(key==='basic')r.append(row('学习形式','select',['全国普通高等院校全日制','其他']));if(key==='education'){r.append(row('学校名称','select',['测试大学','第二大学']),row('就读时间','date',4),row('专业排名','select',['前5%','前10%']),row('学院名称'));}if(key==='awards')r.append(row('获奖时间','date',2),row('奖项名称'),row('奖项描述','textarea'),row('获奖级别','select',['国家级','院校级']));if(key==='projects')r.append(row('项目名称'),row('项目描述','textarea'));if(key==='experience'){const d=row('起止时间','date',4);const checkbox=row('起止时间','checkbox');const label=checkbox.querySelector('label');d.append(label);r.append(d,row('公司名称'));}block.append(r);}
+ add.onclick=record;record();if(key==='campusRoles'){const r=block.querySelector('.multi-fixture');r.append(row('起止时间','date',4),row('在校职务名称'),row('在校职务描述','textarea'));}return block;
+}
+block('个人信息','basic');block('教育背景','education');block('实习经历','experience');block('项目经验','projects');block('获奖经历','awards');block('在校职务','campusRoles');
+</script>

@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "求职快填",
+  "version": "0.0.0",
+  "description": "将本机保存的求职资料填入招聘申请表，支持字段预览、手动匹配和撤销。",
+  "minimum_chrome_version": "102",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "background": {"service_worker": "background.js"},
+  "action": {"default_popup": "popup.html", "default_title": "求职快填", "default_icon": {"16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png"}},
+  "icons": {"16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png"},
+  "options_page": "options.html",
+  "commands": {"_execute_action": {"suggested_key": {"default": "Alt+Shift+J"}, "description": "打开求职快填"}},
+  "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'none'; connect-src 'none'"}
+}

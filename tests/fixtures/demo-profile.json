@@ -1,0 +1,348 @@
+{
+  "format": "jobfill-sections",
+  "version": 1,
+  "sections": {
+    "basic": {
+      "name": "示例候选人",
+      "englishName": "Demo Candidate",
+      "phone": "13800000000",
+      "email": "candidate@example.test",
+      "gender": "男",
+      "birthDate": "2000-03-03",
+      "nationality": "中国",
+      "hukou": "示例省示例市",
+      "idNumber": "TEST-ID-NOT-REAL",
+      "school": "示例理工大学",
+      "major": "机械工程",
+      "degree": "硕士研究生",
+      "graduationDate": "2027-06",
+      "salary": "12000",
+      "annualSalary": "160000",
+      "acceptCityAdjustment": "是",
+      "internshipAvailable": "是",
+      "studyMode": "全国普通高等院校全日制"
+    },
+    "education": [
+      {
+        "school": "示例理工大学",
+        "major": "机械工程",
+        "degree": "硕士研究生",
+        "startDate": "2024-09",
+        "endDate": "2027-06",
+        "college": "示例工程学院",
+        "studyMode": "全国普通高等院校全日制",
+        "gpa": "3.5",
+        "ranking": "前10%"
+      },
+      {
+        "school": "示例科技学院",
+        "major": "机械工程",
+        "degree": "本科",
+        "startDate": "2018-09",
+        "endDate": "2022-06",
+        "college": "示例技术学院",
+        "studyMode": "全国普通高等院校全日制",
+        "gpa": "3.6",
+        "ranking": "前10%"
+      }
+    ],
+    "experience": [
+      {
+        "company": "示例制造公司",
+        "title": "研发实习生",
+        "startDate": "2025-12",
+        "endDate": "",
+        "status": "在职（实习中）",
+        "description": "虚构测试：整理样机试验记录与工程文档。"
+      }
+    ],
+    "projects": [
+      {
+        "name": "测试竞赛项目",
+        "role": "测试成员",
+        "startDate": "2022-03",
+        "endDate": "2022-05",
+        "description": "虚构测试：完成方案整理、测试和结果记录。"
+      },
+      {
+        "name": "示例工程项目1",
+        "role": "测试成员",
+        "startDate": "2022-03",
+        "endDate": "2022-05",
+        "description": "虚构测试：完成方案整理、测试和结果记录。"
+      },
+      {
+        "name": "示例工程项目2",
+        "role": "测试成员",
+        "startDate": "2022-03",
+        "endDate": "2022-05",
+        "description": "虚构测试：完成方案整理、测试和结果记录。"
+      },
+      {
+        "name": "示例工程项目3",
+        "role": "测试成员",
+        "startDate": "2022-03",
+        "endDate": "2022-05",
+        "description": "虚构测试：完成方案整理、测试和结果记录。"
+      },
+      {
+        "name": "示例工程项目4",
+        "role": "测试成员",
+        "startDate": "2022-03",
+        "endDate": "2022-05",
+        "description": "虚构测试：完成方案整理、测试和结果记录。"
+      }
+    ],
+    "awards": [
+      {
+        "name": "测试奖学金",
+        "date": "2026-11",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "测试竞赛奖",
+        "date": "2022-05-27",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉2",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉3",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉4",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉5",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉6",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉7",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉8",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉9",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉10",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉11",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉12",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉13",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉14",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉15",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉16",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉17",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉18",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉19",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉20",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉21",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉22",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉23",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉24",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉25",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉26",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉27",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉28",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      },
+      {
+        "name": "示例荣誉29",
+        "date": "2023-06",
+        "grade": "测试等级",
+        "level": "校级",
+        "issuer": "示例单位",
+        "description": "仅用于自动化测试，不代表真实获奖。"
+      }
+    ],
+    "campusRoles": [
+      {
+        "name": "示例学生职务",
+        "startDate": "2021-01",
+        "endDate": "2024-06",
+        "description": "虚构测试：组织班级活动并整理记录。"
+      }
+    ],
+    "custom": []
+  }
+}

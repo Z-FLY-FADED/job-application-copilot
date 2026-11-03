@@ -1,0 +1,38 @@
+<!doctype html><meta charset="utf-8"><title>仟寻控件回归测试</title><style>input{display:inline-block;margin:4px}button,li,.cell,.custom-tree-node,.el-tree-node__expand-icon{cursor:pointer}li{padding:4px}.el-popper{border:1px solid #999}.disabled{color:#aaa}</style>
+<textarea hidden id="data">隐藏配置，不应识别</textarea><main></main><button id="submit">提交申请</button>
+<script>
+window.submitCount=0;document.querySelector('#submit').onclick=()=>submitCount++;
+function closeMenus(){document.querySelectorAll('.el-popper').forEach(e=>e.style.display='none');}
+function row(name,kind='text'){
+ const r=document.createElement('div');r.className='VeFormItem';const top=document.createElement('div');top.className='VeFormItem__top';const label=document.createElement('div');label.className='VeFormItem-label';label.textContent=name+'*';label.onclick=closeMenus;const main=document.createElement('div');main.className='VeFormItem-main';top.append(label,main);r.append(top);
+ function select(opts){const wrap=document.createElement('div');wrap.className='el-select';const input=document.createElement('input');input.readOnly=true;input.type='text';wrap.append(input);main.append(wrap);input.onclick=()=>{closeMenus();const menu=document.createElement('div');menu.className='el-select-dropdown el-popper';opts.forEach(s=>{const item=document.createElement('li');item.className='el-select-dropdown__item';item.textContent=s;item.onclick=()=>{input.value=s;menu.style.display='none';};menu.append(item);});document.body.append(menu);};return input;}
+ if(kind==='select')select(['本科','硕士','博士']);
+ else if(kind==='phone'){select(['+86','+1']);const inner=row('','text');main.append(inner);}
+ else if(kind==='autocomplete'){
+   if(name==='学校名'){r.classList.add('VeCollegeField');select(['中国大陆 China (Mainland)']);}
+   const wrap=document.createElement('div');wrap.className='el-autocomplete';const input=document.createElement('input');input.type='text';input.setAttribute('role','textbox');wrap.append(input);main.append(wrap);
+   input.oninput=()=>{closeMenus();const menu=document.createElement('div');menu.className='el-autocomplete-suggestion el-popper';menu.id='suggestion-'+Math.random().toString(36).slice(2);input.setAttribute('aria-controls',menu.id);for(const s of (name==='学校名'?['示例理工大学','示例科技学院']:['上海萝博派对科技有限公司','测试公司']))if(s.includes(input.value)){const li=document.createElement('li');li.textContent=s;li.onclick=()=>{input.value=s;input.dataset.committed=s;menu.style.display='none';};menu.append(li);}document.body.append(menu);};
+ }
+ else if(kind==='month'){
+  const wrap=document.createElement('div');wrap.className='el-date-editor el-date-editor--month';const input=document.createElement('input');input.type='text';input.placeholder=name==='开始时间'?'请填写开始时间':'请填写结束时间';wrap.append(input);main.append(wrap);
+  let year=2026,mode='month';const menu=document.createElement('div');menu.className='el-picker-panel el-popper';menu.style.display='none';document.body.append(menu);
+  function render(){menu.replaceChildren();const head=document.createElement('span');head.className='el-date-picker__header-label';head.textContent=year+' 年';head.onclick=()=>{mode='year';render();};menu.append(head);for(const [n,cls] of [[-1,'el-icon-d-arrow-left'],[1,'el-icon-d-arrow-right']]){const button=document.createElement('button');button.className=cls;button.textContent=n<0?'前':'后';button.onclick=()=>{year+=n*(mode==='year'?10:1);render();};menu.append(button);}
+   const table=document.createElement('table');table.className=mode==='year'?'el-year-table':'el-month-table';
+   for(let i=0;i<(mode==='year'?10:12);i++){const td=document.createElement('td'),cell=document.createElement('a');cell.className='cell';cell.textContent=mode==='year'?String(Math.floor(year/10)*10+i):['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'][i];if(mode==='year'&&cell.textContent==='2030')td.className='disabled';cell.onclick=()=>{if(td.className==='disabled')return;if(mode==='year'){year=Number(cell.textContent);mode='month';render();}else{input.value=year+'-'+String(i+1).padStart(2,'0');menu.style.display='none';}};td.append(cell);table.append(td);}menu.append(table);
+  }input.onclick=()=>{closeMenus();menu.style.display='block';mode='month';render();};
+ }
+ else if(kind==='checkbox'){const l=document.createElement('label');l.className='el-checkbox';const i=document.createElement('input');i.type='checkbox';l.append(i,name);main.append(l);}
+ else if(kind==='city'){
+  const ref=document.createElement('div');ref.className='el-popover__reference';ref.setAttribute('aria-describedby','city-picker');const input=document.createElement('input');input.readOnly=true;input.type='text';ref.append(input);main.append(ref);
+  const menu=document.createElement('div');menu.id='city-picker';menu.className='city-picker-popover el-popper';menu.style.display='none';menu.innerHTML='<input class="search"><div class="el-tree"><div class="el-tree-node" aria-expanded="false"><div class="el-tree-node__content"><span class="el-tree-node__expand-icon">+</span><span class="custom-tree-node">江苏省</span></div><div class="el-tree-node__children" style="display:none"><div class="el-tree-node"><div class="el-tree-node__content"><span class="custom-tree-node">南京</span></div></div><div class="el-tree-node"><div class="el-tree-node__content"><span class="custom-tree-node">苏州</span></div></div></div></div></div>';
+  menu.querySelector('.el-tree-node__expand-icon').onclick=()=>{menu.querySelector('.el-tree-node').setAttribute('aria-expanded','true');menu.querySelector('.el-tree-node__children').style.display='block';};for(const city of menu.querySelectorAll('.el-tree-node__children .custom-tree-node'))city.onclick=()=>{input.value=city.textContent;menu.style.display='none';};document.body.append(menu);input.onclick=()=>{closeMenus();menu.style.display='block';};
+ }
+ else{const input=document.createElement('input');input.type='text';main.append(input);}
+ return r;
+}
+function panel(name,build){const p=document.createElement('section');p.className='ResumePanel';const head=document.createElement('div');head.className='ResumePanel__header';head.innerHTML='<h3 class="ResumePanel__title">'+name+'</h3><div class="ResumePanel__header-right"><label>跳过本页<input type="checkbox"></label></div>';p.append(head);document.querySelector('main').append(p);
+ const list=document.createElement('div');list.className='VeRepeatPanel-blocks';p.append(list);const add=document.createElement('button');add.textContent='+添加一条'+name;add.onclick=()=>{const b=document.createElement('div');b.className='Ve-RepeatPanel__block';build(b);list.append(b);};p.append(add);add.click();return p;}
+const basic=panel('基本信息',r=>r.append(row('姓名'),row('手机号码','phone'),row('邮箱'),row('现居住地','city')));
+panel('教育经历',r=>r.append(row('学校名','autocomplete'),row('学历','select'),row('专业'),row('开始时间','month'),row('结束时间','month'),row('至今','checkbox')));
+panel('工作经历',r=>r.append(row('公司','autocomplete'),row('职位'),row('开始时间','month'),row('结束时间','month'),row('至今','checkbox')));
+</script>

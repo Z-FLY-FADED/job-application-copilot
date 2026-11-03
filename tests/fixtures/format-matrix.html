@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>求职快填 多格式自动填写验证</title><style>body{font:15px "Segoe UI","Microsoft YaHei";max-width:900px;margin:30px auto;background:#f8faf8;color:#253d32}fieldset{border:1px solid #ccd9ce;border-radius:8px;margin:12px 0;padding:12px}label{display:inline-flex;gap:10px;align-items:center;margin:6px}input,select{padding:6px}h1{font-size:24px}.grid{display:grid;grid-template-columns:1fr 1fr}.wide{grid-column:1/-1}</style>
+<h1>多格式自动填写验证（虚构测试资料）</h1><main class="grid">
+<fieldset><legend>中文标签</legend><label>姓名<input id="cn-name"></label><label>邮箱<input id="cn-email" type="email"></label></fieldset>
+<fieldset><legend>English labels</legend><label for="aria-phone">Mobile number</label><input id="aria-phone" aria-label="手机号码"><input id="token-email" autocomplete="section-main email" placeholder="请填写"></fieldset>
+<fieldset><legend>单选格式</legend><fieldset><legend>性别</legend><label><input type="radio" name="sex" value="m">Male</label><label><input type="radio" name="sex" value="f">Female</label></fieldset><label><input type="checkbox" id="consent">我已阅读并同意隐私政策</label></fieldset>
+<fieldset><legend>显式标签优先</legend><label>姓名<input id="label-priority" placeholder="邮箱"></label><span id="about-major">专业名称</span><input id="aria-major" aria-labelledby="about-major"></fieldset>
+<fieldset class="wide"><legend>日期格式矩阵</legend><div id="dates"></div></fieldset>
+<fieldset><legend>网页约束</legend><label>手机号<input id="pattern-phone" pattern="[0-9]{11}"></label><label>薪资<input id="bounded-number" type="number" min="1000" max="20000" step="100"></label><label>Email<input id="invalid-email" type="email"></label></fieldset>
+<fieldset><legend>动态与受控输入</legend><label>触发字段<input id="dynamic-trigger"></label><div id="dynamic"></div><label>异步受控字段<input id="delayed"></label></fieldset>
+</main><button id="submit">本地测试提交计数</button><script>
+window.submits=0;document.getElementById('submit').onclick=()=>submits++;
+const dates=[['slash','text','YYYY/MM/DD'],['dot','text','YYYY.MM.DD'],['dmy','text','DD/MM/YYYY'],['mdy','text','MM/DD/YYYY'],['compact','text','YYYYMMDD'],['chinese','text','YYYY年MM月DD日'],['month-slash','text','YYYY/MM'],['month-reverse','text','MM/YYYY'],['month-chinese','text','YYYY年MM月'],['year','text','YYYY'],['native-date','date',''],['native-month','month',''],['native-time','datetime-local',''],['ambiguous','text','DD/MM/YYYY or MM/DD/YYYY']];
+for(const [id,type,placeholder] of dates){const l=document.createElement('label');l.textContent=id==='year'?'获奖年份':id.startsWith('month-')?'毕业时间':id==='native-time'?'到岗时间':'出生日期';const input=document.createElement('input');input.id=id;input.type=type;input.placeholder=placeholder;l.append(input);document.getElementById('dates').append(l);}
+document.getElementById('dynamic-trigger').oninput=()=>{if(!document.getElementById('late-email'))setTimeout(()=>{const l=document.createElement('label');l.textContent='电子邮箱';l.innerHTML+=' <input id="late-email" type="email">';document.getElementById('dynamic').append(l);},30);};
+document.getElementById('delayed').oninput=e=>{if(e.target.value==='lowercase')setTimeout(()=>e.target.value='REJECTED',40);};
+</script>

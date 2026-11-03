@@ -1,0 +1,31 @@
+name: Verify extension and web workspace
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run verify
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: verification-results
+          path: artifacts/current/
+          retention-days: 7
+      - uses: actions/upload-artifact@v7.0.2
+        if: success()
+        with:
+          name: jobfill-extension
+          path: dist/extension/
+          retention-days: 14

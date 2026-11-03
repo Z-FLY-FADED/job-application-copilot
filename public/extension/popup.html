@@ -1,0 +1,10 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>求职快填</title><link rel="stylesheet" href="ui.css"></head><body class="popup">
+<header class="row between"><div class="brand"><span class="logo">填</span><div><div class="eyebrow">APPLY WITH EASE</div><h1>求职快填</h1></div></div><button id="edit">编辑资料 ↗</button></header>
+<div class="hint intro">把重复填写的时间，留给下一次机会。<br>识别字段 → 核对内容 → 一键填入</div>
+<div class="row between"><div><p id="profile-info" class="muted">正在读取本机资料…</p><p id="site" class="muted site"></p></div><span class="pill">本机保存</span></div>
+<div class="tools actions"><button class="primary" id="scan">识别当前页面</button><button id="prepare" disabled>补齐经历表格</button><button id="undo" disabled>撤销上次填写</button></div>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+<p id="scan-summary"></p><div id="fields" class="fields"></div>
+<footer><label class="check"><input id="overwrite" type="checkbox"> 覆盖网页已有内容</label><label class="check"><input id="remember" type="checkbox"> 记住此页面的字段对应关系（含“不填写”）</label>
+<div class="actions" style="margin-top:12px"><button class="primary" id="fill" disabled>填入已匹配的字段</button><button id="forget">清除此页匹配</button></div><div class="actions" style="margin-top:8px"><button id="check-submit">检查提交条件</button><button id="submit-current" disabled>提交当前申请</button></div><p class="muted" style="margin-top:6px">核对网页内容后检查提交条件。协议、承诺和验证码需在原网页完成。</p></footer>
+<script type="module" src="popup.js"></script></body></html>

@@ -5,3 +5,19 @@ desktop.ini
 *.log
 *.tmp
 *.bak
+
+# Personal profiles, archives and browser state are local only.
+/local-private/
+/node_modules/
+/dist/
+/artifacts/
+/releases/
+/work/
+/outputs/
+/.env
+/.env.*
+/.npmrc
+/.playwright/
+*.pdf
+*.docx
+*.xlsx
